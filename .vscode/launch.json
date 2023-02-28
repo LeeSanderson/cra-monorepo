@@ -1,0 +1,13 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "command": "npm start",
+        "name": "Run MHA",
+        "request": "launch",
+        "cwd": "${workspaceFolder}/apps/my-healthy-advantage",
+        "type": "node-terminal"
+      }
+    ]
+  }
+  

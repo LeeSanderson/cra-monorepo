@@ -1,7 +1,20 @@
 {
-    "typescript.tsdk": "node_modules\\typescript\\lib",
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "files.associations": {
+        "*.css": "tailwindcss"
+    },
+    "editor.quickSuggestions": {
+        "strings": true
+    },
+    "editor.snippetSuggestions": "top",
+    "editor.tabSize": 4,
     "cSpell.words": [
-        "brighthr"
-    ],
+        "brighthr",
+        "hookform",
+        "tailwindcss"],
+    "prettier.tabWidth": 4,
+    "terminal.integrated.cursorStyle": "underline",
+    "typescript.tsdk": "node_modules\\typescript\\lib",
     "jest.jestCommandLine": "npx jest"
 }

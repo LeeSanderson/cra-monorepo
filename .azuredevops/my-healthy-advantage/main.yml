@@ -1,0 +1,164 @@
+# Override triggers in DevOps pipeline settings
+trigger: none
+pr: none
+
+variables:
+  app_npm_cache: $(Build.SourcesDirectory)/apps/my-healthy-advantage/node_modules
+  shared_npm_cache: $(Build.SourcesDirectory)/apps/shared/node_modules
+
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+  - stage: setup
+    displayName: Setup
+    dependsOn: []
+    jobs:
+      - job:
+        displayName: NPM Package Caching (App)
+        steps:
+          - task: Cache@2
+            inputs:
+                cacheHitVar: 'CacheRestored'
+                key: 'npm | “$(Agent.OS)” | $(Build.SourcesDirectory)/apps/my-healthy-advantage/package-lock.json'
+                path: '$(app_npm_cache)'
+                workingDir: 'apps/my-healthy-advantage'
+            displayName: cache npm packages
+          - script: npm ci
+            workingDirectory: 'apps/my-healthy-advantage'
+            displayName: npm ci
+      - job:
+        displayName: NPM Package Caching (Shared)
+        steps:
+          - task: Cache@2
+            inputs:
+                cacheHitVar: 'CacheRestored'
+                key: 'npm | “$(Agent.OS)” | $(Build.SourcesDirectory)/apps/shared/package-lock.json'
+                path: '$(shared_npm_cache)'
+                workingDir: 'apps/shared'
+            displayName: cache npm packages
+          - script: npm ci
+            workingDirectory: 'apps/shared'
+            displayName: npm ci
+  - stage: build
+    displayName: Build
+    dependsOn: setup
+    jobs:
+      - job:
+        displayName: NextJS Site
+        steps:
+          - task: Cache@2
+            inputs:
+              cacheHitVar: 'CacheRestored'
+              key: 'npm | “$(Agent.OS)” | $(Build.SourcesDirectory)/apps/my-healthy-advantage/package-lock.json'
+              path: '$(app_npm_cache)'
+              workingDir: 'apps/my-healthy-advantage'
+            displayName: use npm package cache (app)
+          - task: Cache@2
+            inputs:
+              cacheHitVar: 'CacheRestored'
+              key: 'npm | “$(Agent.OS)” | $(Build.SourcesDirectory)/apps/shared/package-lock.json'
+              path: '$(shared_npm_cache)'
+              workingDir: 'apps/shared'
+            displayName: use npm package cache (shared)
+          - script: npm run build
+            workingDirectory: 'apps/my-healthy-advantage'
+            displayName: npm run build
+          - script: |
+              mkdir deployment
+              cp -R public deployment/public
+            workingDirectory: 'apps/my-healthy-advantage'
+            displayName: move public to deployment directory
+          - task: ArchiveFiles@2
+            inputs:
+              archiveFile: '$(Pipeline.Workspace)/deployment/site.zip'
+              archiveType: 'zip'
+              includeRootFolder: false
+              replaceExistingArchive: true
+              rootFolderOrFile: '$(System.DefaultWorkingDirectory)/apps/my-healthy-advantage/deployment/'
+            displayName: create zip archive
+          - task: PublishPipelineArtifact@1
+            inputs:
+              artifact: 'site'
+              publishLocation: "pipeline"
+              targetPath: "$(Pipeline.Workspace)/deployment/site.zip"
+            displayName: publish zip archive
+  - stage: unitTest
+    displayName: Unit Test
+    dependsOn: setup
+    jobs:
+      - job:
+        displayName: Jest (App)
+        steps:
+          - task: Cache@2
+            inputs:
+              cacheHitVar: 'CacheRestored'
+              key: 'npm | “$(Agent.OS)” | $(Build.SourcesDirectory)/apps/my-healthy-advantage/package-lock.json'
+              path: '$(app_npm_cache)'
+              workingDir: 'apps/my-healthy-advantage'
+            displayName: use npm package cache (app)
+          - task: Cache@2
+            inputs:
+              cacheHitVar: 'CacheRestored'
+              key: 'npm | “$(Agent.OS)” | $(Build.SourcesDirectory)/apps/shared/package-lock.json'
+              path: '$(shared_npm_cache)'
+              workingDir: 'apps/shared'
+            displayName: use npm package cache (shared)
+          - script: CI=true npm run test
+            workingDirectory: 'apps/my-healthy-advantage'
+            displayName: npm run test
+      - job:
+        displayName: Jest (Shared)
+        steps:
+          - task: Cache@2
+            inputs:
+              cacheHitVar: 'CacheRestored'
+              key: 'npm | “$(Agent.OS)” | $(Build.SourcesDirectory)/apps/shared/package-lock.json'
+              path: '$(shared_npm_cache)'
+              workingDir: 'apps/shared'
+            displayName: use npm package cache (shared)
+          - script: CI=true npm run test
+            workingDirectory: 'apps/shared'
+            displayName: npm run test
+  - stage: deploy
+    displayName: Deploy
+    dependsOn:
+      - build
+      - unitTest
+    condition: |
+      and
+      (
+        in(dependencies.build.result, 'Succeeded', 'SucceededWithIssues', 'Skipped'),
+        in(dependencies.unitTest.result, 'Succeeded', 'SucceededWithIssues', 'Skipped')
+      )
+    jobs:
+      - job:
+        displayName: Cloudflare Pages
+        steps:
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              buildType: 'current'
+              artifactName: 'site'
+              targetPath: '$(Pipeline.Workspace)/deploy'
+            displayName: download site.zip
+          - task: ExtractFiles@1
+            inputs:
+              archiveFilePatterns: '$(Pipeline.Workspace)/deploy/site.zip'
+              destinationFolder: '$(System.DefaultWorkingDirectory)/deploy/site'
+              overwriteExistingFiles: true
+            displayName: extract site.zip
+          - task: Cache@2
+            inputs:
+                key: 'npm | “$(Agent.OS)” | $(Build.SourcesDirectory)/apps/my-healthy-advantage/package-lock.json'
+                path: '$(app_npm_cache)'
+                cacheHitVar: 'CacheRestored'
+            displayName: use npm package cache
+          - script: |
+              cd deploy/site
+              npx wrangler pages publish public --branch=main --project-name=myhealthyadvantage
+            displayName: wrangler pages publish
+            workingDirectory: '$(System.DefaultWorkingDirectory)'
+            retryCountOnTaskFailure: 2
+            env:
+              CLOUDFLARE_ACCOUNT_ID: $(CLOUDFLARE_ACCOUNT_ID)
+              CLOUDFLARE_API_TOKEN: $(CLOUDFLARE_API_TOKEN)

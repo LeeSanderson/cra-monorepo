@@ -1,0 +1,7 @@
+{
+    "recommendations": [
+        "esbenp.prettier-vscode",
+        "actboy168.tasks",
+        "dbaeumer.vscode-eslint"
+    ]
+}

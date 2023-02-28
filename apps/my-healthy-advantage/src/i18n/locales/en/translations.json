@@ -1,0 +1,15 @@
+{
+  "learn": {
+    "react": "Welcome to My Healthy Advantage"
+  },
+  "login": {
+    "heading": "Log In",
+    "button": "Login",
+    "emailFieldName": "Email",
+    "emailRequiredError": "Email is required",
+    "emailInvalidFormatError": "Email format is invalid",
+    "passwordFieldName": "Password",
+    "passwordRequiredError": "Password is required",
+    "invalidEmailOrPasswordError": "Invalid username or password"
+  }
+}

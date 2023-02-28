@@ -1,0 +1,52 @@
+{
+	"describe": {
+		"prefix": ["describe"],
+		"body": ["describe(\"${1:something}\", () => {\n\t$0\n});"],
+		"description": "Jest describe"
+	},
+	"it": {
+		"prefix": ["it"],
+		"body": ["it(\"${1:does something}\", () => {\n\t$0\n});"],
+		"description": "Jest test"
+	},
+	"render": {
+		"prefix": ["render"],
+		"body": ["render(<${1:Component}>$0</${1:Component}>);"],
+		"description": "Jest render"
+	},
+	"tsx component": {
+		"prefix": ["tsx", "jsx", "react"],
+		"body": ["export const ${1:Component} = () => {\n\treturn (\n\t\t<${2:element}>$0</${2:element}>\n\t);\n};"],
+		"description": "React component"
+	},
+    "tsx component arg": {
+		"prefix": ["attr", "param", "arg"],
+		"body": ["${1:attribute}={${2:value}}$0"],
+		"description": "React component attribute"
+	},
+	"state": {
+		"prefix": ["state", "useState"],
+		"body": ["const [${1:name}, set${1/(.)/${1:/capitalize}/}] = useState(${2:initialValue});$0"],
+		"description": "React useState"
+	},
+	"effect": {
+		"prefix": ["effect", "useEffect"],
+		"body": ["useEffect(() => {\n\t$0\n}, []);"],
+		"description": "React useEffect"
+	},
+	"beforeEach": {
+		"prefix": ["beforeEach"],
+		"body": ["beforeEach(() => {\n\t$0\n});"],
+		"description": "Jest beforeEach"
+	},
+	"importReact": {
+		"prefix": ["import React"],
+		"body": ["import React from \"react\";\n$0"],
+		"description": "Import react"
+	},
+	"getByRole": {
+		"prefix": ["screen.getByRole", "getByRole"],
+		"body": ["const ${1:element} = screen.getByRole(\"${2:role}\", { name: \"${3:name}\" });\n$0"],
+		"description": "Jest getByRole"
+	}
+}
