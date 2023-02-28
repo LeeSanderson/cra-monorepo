@@ -2,5 +2,6 @@
     "typescript.tsdk": "node_modules\\typescript\\lib",
     "cSpell.words": [
         "brighthr"
-    ]
+    ],
+    "jest.jestCommandLine": "npx jest"
 }
