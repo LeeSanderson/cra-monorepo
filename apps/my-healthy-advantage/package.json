@@ -5,6 +5,7 @@
   "dependencies": {
     "@brighthr/component-button": "^1.4.9",
     "@brighthr/component-input": "^0.1.8",
+    "@brighthr/tailwind-config": "^1.0.3",
     "@hookform/error-message": "^2.0.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
