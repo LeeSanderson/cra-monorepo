@@ -9,7 +9,7 @@ import { AuthProvider } from "./core/auth/AuthProvider";
 import { Home } from "./Views/Home/Home";
 import { ProtectedRoute } from "./core/auth/ProtectedRoute";
 import { Perks } from "./Views/Perks/Perks";
-import HealthAssuredLogo from "@shared/assets/HealthAssuredLogo.jpg";
+import HealthAssuredLogo from "shared/assets/HealthAssuredLogo.jpg";
 
 function protect(el: ReactElement): ReactElement {
     return <ProtectedRoute>{el}</ProtectedRoute>;
