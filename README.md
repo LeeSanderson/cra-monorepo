@@ -6,9 +6,9 @@ Example / template mono repo created using create react app
 
 1. Install Dependencies
 
-```bash
-    $ npm install
-```
+    ```bash
+    npm install
+    ```
 
 # Configure Test Explorer
 
@@ -23,13 +23,13 @@ Example / template mono repo created using create react app
 Example: add `react-router-dom` to the **my-healthy-advantage** app project
 
 ```bash
-    $ npm install react-router-dom -w my-healthy-advantage
+npm install react-router-dom -w my-healthy-advantage
 ```
 
 Example: add `@brighthr/component-input` to the **shared** project
 
 ```bash
-    $ npm install @brighthr/component-input -w shared
+npm install @brighthr/component-input -w shared
 ```
 
 # Adding path aliases
@@ -39,3 +39,14 @@ modify the following files/sections
 -   [tsconfig.json](apps/my-healthy-advantage/tsconfig.json) > `compilerOptions/paths`
 -   [package.json](apps/my-healthy-advantage/package.json) > `jest/moduleNameMapper`
 -   [config-overrides.js](apps/my-healthy-advantage/config-overrides.js) > `jbabelInclude` & `addWebpackAlias`
+
+# Adding applications/project to the monorepo
+
+1. Create the app
+    ```bash
+    npx create-react-app apps/my-healthy-advantage-admin --template typescript
+    ```
+1. Delete the `node_modules` folder
+1. merge the .gitignore contents into the [root .gitignore](./.gitignore) -- TBC
+1. Run `npm install` to ensure all packages are installed into the root node_packages folder
+1. Add the project to [jest.config.js](./jest.config.js)
