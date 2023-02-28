@@ -1,0 +1,11 @@
+{
+  "name": "my-healthy-advantage",
+  "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
+  "devDependencies": {
+    "jest": "^27.5.1",
+    "ts-jest": "^27.1.4"
+  }
+}
