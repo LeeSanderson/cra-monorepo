@@ -42,11 +42,10 @@ modify the following files/sections
 
 # Adding applications/project to the monorepo
 
-1. Create the app
-    ```bash
-    npx create-react-app apps/my-healthy-advantage-admin --template typescript
-    ```
+1. Create the app > `npx create-react-app apps/my-healthy-advantage-admin --template typescript`
 1. Delete the `node_modules` folder
 1. merge the .gitignore contents into the [root .gitignore](./.gitignore) -- TBC
 1. Run `npm install` to ensure all packages are installed into the root node_packages folder
 1. Add the project to [jest.config.js](./jest.config.js)
+1. `npm install --save customize-cra react-app-rewired -w my-healthy-advantage-admin`
+1. copy the `config-overrides.js` file from an existing project folder to the new project folder
