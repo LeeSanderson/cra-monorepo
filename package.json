@@ -1,14 +1,14 @@
 {
-  "name": "my-healthy-advantage",
-  "private": true,
-  "workspaces": [
-    "apps/*"
-  ],
-  "scripts": {
-    "test": "npx jest --debug --no-cache"
-  },
-  "devDependencies": {
-    "jest": "^27.5.1",
-    "ts-jest": "^27.1.4"
-  }
+    "name": "my-healthy-advantage",
+    "private": true,
+    "workspaces": [
+        "apps/*"
+    ],
+    "scripts": {
+        "test": "npx jest --no-cache"
+    },
+    "devDependencies": {
+        "jest": "^27.5.1",
+        "ts-jest": "^27.1.4"
+    }
 }

@@ -1,6 +1,7 @@
 module.exports = {
     projects: [
         {
+            displayName: "my-healthy-advantage",
             rootDir: "<rootDir>/apps/my-healthy-advantage",
             verbose: true,
             cache: false,
@@ -15,6 +16,7 @@ module.exports = {
             },
         },
         {
+            displayName: "shared",
             rootDir: "<rootDir>/apps/shared",
             verbose: true,
             cache: false,
@@ -26,6 +28,7 @@ module.exports = {
             },
         },
         {
+            displayName: "my-healthy-advantage-admin",
             rootDir: "<rootDir>/apps/my-healthy-advantage-admin",
             verbose: true,
             cache: false,
