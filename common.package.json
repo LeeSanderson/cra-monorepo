@@ -1,0 +1,18 @@
+{
+    "eslintConfig": {
+        "extends": ["react-app", "react-app/jest"],
+        "overrides": [
+            {
+                "files": ["*.test.tsx", "*.spec.tsx"],
+                "rules": {
+                    "testing-library/no-render-in-setup": [
+                        "error",
+                        {
+                            "allowTestingFrameworkSetupHook": "beforeEach"
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}
