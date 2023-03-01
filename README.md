@@ -47,5 +47,6 @@ modify the following files/sections
 1. merge the .gitignore contents into the [root .gitignore](./.gitignore) -- TBC
 1. Run `npm install` to ensure all packages are installed into the root node_packages folder
 1. Add the project to [jest.config.js](./jest.config.js)
+    - remember to include the `moduleNameMapper` section for referencing shared projects
 1. `npm install --save customize-cra react-app-rewired -w my-healthy-advantage-admin`
 1. copy the `config-overrides.js` file from an existing project folder to the new project folder

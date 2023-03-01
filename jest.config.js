@@ -35,6 +35,9 @@ module.exports = {
                 "^.+\\.tsx?$": "ts-jest",
                 "^.+\\.(svg|css)$": "<rootDir>/../../ignoreTransform.js",
             },
+            moduleNameMapper: {
+                "shared/(.*)": "<rootDir>/../shared/src/$1",
+            },
         },
     ],
 };
