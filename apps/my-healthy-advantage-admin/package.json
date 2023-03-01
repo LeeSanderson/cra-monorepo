@@ -1,7 +1,6 @@
 {
     "name": "my-healthy-advantage-admin",
     "version": "0.1.0",
-    "main": "../../common.package.json",
     "private": true,
     "dependencies": {
         "@brighthr/tailwind-config": "^1.0.3",

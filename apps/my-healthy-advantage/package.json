@@ -1,7 +1,6 @@
 {
     "name": "my-healthy-advantage",
     "version": "0.1.0",
-    "main": "../../common.package.json",
     "private": true,
     "dependencies": {
         "@brighthr/component-button": "^1.4.9",
