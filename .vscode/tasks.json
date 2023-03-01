@@ -3,7 +3,7 @@
     "tasks": [
         {
             "label": "Start Dev Environment",
-            "dependsOn": ["MHA.Start"],
+            "dependsOn": ["PWA (dev)", "Admin (dev)"],
             "options": {
                 "statusbar": {
                     "color": "#ff0"
@@ -12,7 +12,7 @@
         },
         {
             "label": "Build",
-            "dependsOn": ["MHA.Build"],
+            "dependsOn": ["PWA (build)", "Admin (build)"],
             "options": {
                 "statusbar": {
                     "color": "#0084ff"
@@ -20,8 +20,36 @@
             }
         },
         {
-            "label": "Run",
-            "dependsOn": ["MHA.Build"],
+            "label": "Start",
+            "dependsOn": ["PWA (start)", "Admin (start)"],
+            "options": {
+                "statusbar": {
+                    "color": "#0f0"
+                }
+            }
+        },
+        {
+            "label": "PWA (start)",
+            "dependsOrder": "sequence",
+            "dependsOn": ["PWA (build)", "PWA (serve)"],
+            "options": {
+                "statusbar": {
+                    "hide": true
+                }
+            }
+        },
+        {
+            "label": "Admin (start)",
+            "dependsOrder": "sequence",
+            "dependsOn": ["Admin (build)", "Admin (serve)"],
+            "options": {
+                "statusbar": {
+                    "hide": true
+                }
+            }
+        },
+        {
+            "label": "PWA (serve)",
             "type": "shell",
             "command": "serve -s build",
             "presentation": {
@@ -36,12 +64,32 @@
             "options": {
                 "cwd": "${workspaceFolder}/apps/my-healthy-advantage",
                 "statusbar": {
-                    "color": "#0f0"
+                    "hide": true
                 }
             }
         },
         {
-            "label": "MHA.Start",
+            "label": "Admin (serve)",
+            "type": "shell",
+            "command": "serve -s build",
+            "presentation": {
+                "echo": false,
+                "reveal": "always",
+                "focus": false,
+                "panel": "dedicated",
+                "showReuseMessage": true,
+                "clear": true,
+                "group": "RUN"
+            },
+            "options": {
+                "cwd": "${workspaceFolder}/apps/my-healthy-advantage-admin",
+                "statusbar": {
+                    "hide": true
+                }
+            }
+        },
+        {
+            "label": "PWA (dev)",
             "type": "shell",
             "command": "npm start",
             "presentation": {
@@ -56,12 +104,32 @@
             "options": {
                 "cwd": "${workspaceFolder}/apps/my-healthy-advantage",
                 "statusbar": {
-                    "hide": true,
+                    "hide": true
                 }
             }
         },
         {
-            "label": "MHA.Build",
+            "label": "Admin (dev)",
+            "type": "shell",
+            "command": "npm start",
+            "presentation": {
+                "echo": false,
+                "reveal": "always",
+                "focus": false,
+                "panel": "dedicated",
+                "showReuseMessage": true,
+                "clear": true,
+                "group": "UI"
+            },
+            "options": {
+                "cwd": "${workspaceFolder}/apps/my-healthy-advantage-admin",
+                "statusbar": {
+                    "hide": true
+                }
+            }
+        },
+        {
+            "label": "PWA (build)",
             "type": "shell",
             "command": "npm run build",
             "presentation": {
@@ -75,6 +143,26 @@
             },
             "options": {
                 "cwd": "${workspaceFolder}/apps/my-healthy-advantage",
+                "statusbar": {
+                    "hide": true
+                }
+            }
+        },
+        {
+            "label": "Admin (build)",
+            "type": "shell",
+            "command": "npm run build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false,
+                "group": "BUILD"
+            },
+            "options": {
+                "cwd": "${workspaceFolder}/apps/my-healthy-advantage-admin",
                 "statusbar": {
                     "hide": true
                 }
