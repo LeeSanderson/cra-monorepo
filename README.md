@@ -38,7 +38,7 @@ modify the following files/sections
 
 -   [tsconfig.json](apps/my-healthy-advantage/tsconfig.json) > `compilerOptions/paths`
 -   [package.json](apps/my-healthy-advantage/package.json) > `jest/moduleNameMapper`
--   [config-overrides.js](apps/my-healthy-advantage/config-overrides.js) > `jbabelInclude` & `addWebpackAlias`
+-   [config-overrides.js](apps/my-healthy-advantage/config-overrides.js) > `babelInclude` & `addWebpackAlias`
 
 # Adding applications/project to the monorepo
 
